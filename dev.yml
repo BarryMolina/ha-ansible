@@ -1,0 +1,9 @@
+- name: Test Host Connection
+  hosts: all
+  tasks:
+    - name: Ping all hosts
+      ansible.builtin.ping:
+
+    - name: Print message
+      ansible.builtin.debug:
+        msg: "Provisioning"

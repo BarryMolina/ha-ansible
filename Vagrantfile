@@ -74,4 +74,10 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "dev.yml"
+    ansible.inventory_path = "inventory.ini"
+    ansible.limit = "development"
+  end
 end
