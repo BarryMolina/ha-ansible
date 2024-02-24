@@ -21,3 +21,4 @@ services:
     restart: unless-stopped
     ports:
       - 1883:1883
+    user: "1000:1000"
