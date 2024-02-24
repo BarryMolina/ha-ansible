@@ -3,8 +3,10 @@ vendor/roles/
 .vault_pass
 
 # homeassistant
-.storage
-.cloud
+config/.storage/*
+!config/.storage/.gitkeep
+config/.cloud/*
+!config/.cloud/.gitkeep
 .google.token
 ip_bans.yaml
 secrets.yaml
