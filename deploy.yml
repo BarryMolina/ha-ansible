@@ -15,6 +15,10 @@
         dest: "{{ project_source_path }}"
         version: "{{ repo_branch }}"
         accept_hostkey: true
+    - name: Run docker-compose
+      ansible.builtin.command: docker compose up -d --build --remove-orphans
+      args:
+        chdir: "{{ project_source_path }}"
 # - name: Build and run docker containers
 #   hosts: production
 #   ansible.builtin.command: docker-compose -f /home/{{ admin_user }}/docker-compose.yml up -d
