@@ -11,3 +11,7 @@ known_devices.yaml
 home-assistant*.db*
 home-assistant*.log*
 .HA_VERSION
+
+# mosquitto
+mosquitto/log/*
+mosquitto/data/*
