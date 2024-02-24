@@ -79,5 +79,7 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "dev.yml"
     ansible.inventory_path = "inventory.ini"
     ansible.limit = "development"
+    # ansible.galaxy_role_file = "galaxy.yml"
+    # ansible.galaxy_roles_path = "vendor/roles"
   end
 end

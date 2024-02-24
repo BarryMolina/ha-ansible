@@ -1,5 +1,5 @@
 - name: Test Host Connection
-  hosts: all
+  hosts: development
   tasks:
     - name: Ping all hosts
       ansible.builtin.ping:
@@ -7,3 +7,12 @@
     - name: Print message
       ansible.builtin.debug:
         msg: "Provisioning"
+- name: Test Vars
+  hosts: development
+  tasks:
+    - name: Print message dev_var
+      ansible.builtin.debug:
+        msg: "test_dev_var: {{ test_dev_var }}"
+    - name: Print message all_var
+      ansible.builtin.debug:
+        msg: "test_all_var: {{ test_all_var }}"
