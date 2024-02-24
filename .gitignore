@@ -1,2 +1,12 @@
 .vagrant/
 vendor/roles/
+
+# homeassistant
+.storage
+.cloud
+.google.token
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+home-assistant*.db*
+home-assistant*.log*
