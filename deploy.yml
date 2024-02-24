@@ -20,6 +20,12 @@
       ansible.builtin.command: docker compose up -d --build --remove-orphans
       args:
         chdir: "{{ project_source_path }}"
+    - name: Create Mosquitto Password File
+      template:
+        src: templates/mosquitto_passwd.j2
+        dest: "{{ project_source_path }}/config/mosquitto_passwd"
+    - name: Encrypt Mosquitto Password File
+      ansible.builtin.command: docker compose exec mosquitto mosquitto_passwd -U /mosquitto/config/mosquitto_passwd
 # - name: Build and run docker containers
 #   hosts: production
 #   ansible.builtin.command: docker-compose -f /home/{{ admin_user }}/docker-compose.yml up -d

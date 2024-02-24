@@ -2,3 +2,4 @@ test_prod_var: "TEST_PROD_VAR"
 admin_user: barry
 project_source_path: /home/{{ admin_user }}/ha-ansible
 repo_branch: homeassistant
+mosquitto_user: ha_mosquitto
