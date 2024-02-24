@@ -1,0 +1,20 @@
+- name: Test Host Connection
+  hosts: production
+  tasks:
+    - name: Ping hosts
+      ansible.builtin.ping:
+    - name: Print message
+      ansible.builtin.debug:
+        msg: "Deploying under user: {{ admin_user}}"
+- name: Build and Run Docker Containers
+  hosts: production
+  tasks:
+    - name: Clone repository
+      ansible.builtin.git:
+        repo: "{{ project_git_repo }}"
+        dest: "{{ project_source_path }}"
+        version: "{{ repo_branch }}"
+        accept_hostkey: true
+# - name: Build and run docker containers
+#   hosts: production
+#   ansible.builtin.command: docker-compose -f /home/{{ admin_user }}/docker-compose.yml up -d

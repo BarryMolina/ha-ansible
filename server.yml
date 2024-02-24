@@ -1,18 +1,13 @@
 - name: Test Host Connection
   hosts: production
   tasks:
-    - name: Ping all hosts
+    - name: Ping hosts
       ansible.builtin.ping:
-
     - name: Print message
       ansible.builtin.debug:
-        msg: "Provisioning"
-- name: Test Vars
+        msg: "Provisioning under user: {{ admin_user}}"
+- name: Homeassistant - Install Dependencies
   hosts: production
-  tasks:
-    - name: Print message dev_var
-      ansible.builtin.debug:
-        msg: "test_prod_var: {{ test_prod_var }}"
-    - name: Print message all_var
-      ansible.builtin.debug:
-        msg: "test_all_var: {{ test_all_var }}"
+  become: yes
+  roles:
+    - { role: docker, docker_users: ["{{ admin_user }}"], tags: [docker] }
