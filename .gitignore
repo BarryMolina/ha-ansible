@@ -10,3 +10,4 @@ secrets.yaml
 known_devices.yaml
 home-assistant*.db*
 home-assistant*.log*
+.HA_VERSION
