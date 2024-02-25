@@ -11,6 +11,7 @@ services:
     privileged: true
     ports:
       - 8123:8123
+    user: "1000:1000"
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto
