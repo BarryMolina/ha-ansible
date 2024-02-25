@@ -10,3 +10,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 homekit:
+  default: warning
+  logs:
+    homeassistant.components.homekit: debug
+    pyhap: debug
