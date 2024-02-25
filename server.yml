@@ -1,0 +1,13 @@
+- name: Test Host Connection
+  hosts: production
+  tasks:
+    - name: Ping hosts
+      ansible.builtin.ping:
+    - name: Print message
+      ansible.builtin.debug:
+        msg: "Provisioning under user: {{ admin_user}}"
+- name: Homeassistant - Install Dependencies
+  hosts: production
+  become: yes
+  roles:
+    - { role: docker, docker_users: ["{{ admin_user }}"], tags: [docker] }

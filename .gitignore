@@ -1,2 +1,22 @@
 .vagrant/
 vendor/roles/
+.vault_pass
+
+# homeassistant
+config/.storage/*
+!config/.storage/.gitkeep
+config/.cloud/*
+!config/.cloud/.gitkeep
+.google.token
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+home-assistant*.db*
+home-assistant*.log*
+.HA_VERSION
+
+# mosquitto
+mosquitto/log/*
+!mosquitto/log/.gitkeep
+mosquitto/data/*
+!mosquitto/data/.gitkeep

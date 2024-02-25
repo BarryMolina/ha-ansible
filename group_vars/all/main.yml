@@ -1,1 +1,3 @@
-test_all_var: "TEST_ALL_VAR"
+test_all_var: TEST_ALL_VAR
+project_git_repo: git@github.com:BarryMolina/ha-ansible.git
+repo_branch: main
