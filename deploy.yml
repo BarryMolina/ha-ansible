@@ -17,7 +17,7 @@
         accept_hostkey: true
         force: true
     - name: Run docker-compose
-      ansible.builtin.command: docker compose up -d --build --remove-orphans
+      ansible.builtin.command: docker compose up -d --remove-orphans --force-recreate
       args:
         chdir: "{{ project_source_path }}"
     - name: Create Mosquitto Password File
