@@ -1,0 +1,14 @@
+version: "3"
+
+tasks:
+  up:
+    cmds:
+      - docker compose up
+
+  provision:
+    cmds:
+      - ansible-playbook server.yml -K
+
+  deploy:
+    cmds:
+      - ansible-playbook deploy.yml
