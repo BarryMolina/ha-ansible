@@ -19,11 +19,27 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_BME280.h>
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+#include <secrets.h>
 
+// Temp sensor
 Adafruit_BME280 bme; // use I2C interface
 Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
 Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void callback(char *topic, byte *payload, unsigned int length)
+{
+  char msg[length + 1];
+  memcpy(msg, payload, length);
+  msg[length] = '\0';
+  Serial.print("Payload received: ");
+  Serial.println(msg);
+}
 
 void setup()
 {
@@ -32,6 +48,19 @@ void setup()
 
   // So that this doesn't run before our monitor is set up
   delay(3000);
+
+  WiFi.begin(ssid, wifi_password);
+  Serial.println("Attempting to connect to WIFI");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println();
+  Serial.println("Wifi connected!");
+
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
 
   // Set relay pin to output
   pinMode(D1, OUTPUT);
@@ -54,17 +83,45 @@ void setup()
   bme_humidity->printSensorDetails();
 }
 
+void reconnect()
+{
+  while (!client.connected())
+  {
+    Serial.println("Attempting reconnection...");
+    if (client.connect("D1MiniClient", mqtt_user, mqtt_password))
+    {
+      Serial.println("Client connected!");
+      client.subscribe("ac/setTemp");
+    }
+    else
+    {
+      Serial.println("Waiting a bit...");
+      delay(5000);
+    }
+  }
+}
+
 bool setHigh = true;
 void loop()
 {
+  if (!client.connected())
+  {
+    reconnect();
+  }
+  client.loop();
+
   sensors_event_t temp_event, pressure_event, humidity_event;
   bme_temp->getEvent(&temp_event);
   bme_pressure->getEvent(&pressure_event);
   bme_humidity->getEvent(&humidity_event);
 
+  double temp = (temp_event.temperature * 9.0 / 5.0) + 32.0;
+  char tempStr[8];
+  dtostrf(temp, 4, 2, tempStr);
   Serial.print(F("Temperature = "));
-  Serial.print((temp_event.temperature * 9.0 / 5.0) + 32.0);
+  Serial.print(temp);
   Serial.println(" *F");
+  client.publish("ac/getTemp", tempStr);
 
   Serial.print(F("Temperature = "));
   Serial.print(temp_event.temperature);
